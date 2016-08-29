@@ -95,8 +95,11 @@ namespace Jobinator.Sample
 		static void Main(string[] args)
 		{
 			Core.Configuration oConfiguration = new Core.Configuration();
-			oConfiguration.ConnectionUrl = @"Server=127.0.0.1;Port=5432;Database=Jobinator;User Id=jobinator;Password=jobinator;";
-			oConfiguration.Provider = ServiceStack.OrmLite.PostgreSqlDialect.Provider;
+
+			//oConfiguration.ConnectionUrl = @"Server=127.0.0.1;Port=5432;Database=Jobinator;User Id=jobinator;Password=jobinator;";
+			//oConfiguration.Provider = ServiceStack.OrmLite.PostgreSqlDialect.Provider;
+			oConfiguration.ConnectionUrl = "./Jobinator.sqlite";
+			oConfiguration.Provider = ServiceStack.OrmLite.SqliteDialect.Provider;
 			oConfiguration.Mode = Core.Configuration.EMode.Server;
 			oConfiguration.MainServer = @"localhost";
 			oConfiguration.MainServerPort = 56246;
