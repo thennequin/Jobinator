@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Jobinator.Agent/bin
+/Jobinator.Agent/obj
+/Jobinator.Core/bin
+/Jobinator.Core/obj
+/Jobinator.Sample/bin
+/Jobinator.Sample/obj
