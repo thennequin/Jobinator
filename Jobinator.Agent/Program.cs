@@ -1,4 +1,6 @@
-﻿//#define ADVANCED_LOG
+﻿//Only for windows
+//#define ADVANCED_LOG
+
 using System;
 using System.Collections.Generic;
 
@@ -17,8 +19,10 @@ namespace Jobinator.Sample.Agent
 
 	class Program
 	{
-		//[DllImport("Kernel32.dll"), SuppressUnmanagedCodeSecurity]
-		//public static extern int GetCurrentProcessorNumber();
+#if ADVANCED_LOG
+		[System.Runtime.InteropServices.DllImport("Kernel32.dll"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern int GetCurrentProcessorNumber();
+#endif
 
 		static void Main(string[] args)
 		{
@@ -26,7 +30,6 @@ namespace Jobinator.Sample.Agent
 			
 			oConfiguration.Mode = Core.Configuration.EMode.Agent;
 			oConfiguration.MainServer = Properties.Settings.Default.MainServer;
-			oConfiguration.MainServer = "cth-orion";
 			oConfiguration.MainServerPort = Properties.Settings.Default.MainServerPort;
 			oConfiguration.AcceptedQueue = Properties.Settings.Default.Queues.Split(';');
 			if (Properties.Settings.Default.MaxThread > 0)
@@ -47,15 +50,13 @@ namespace Jobinator.Sample.Agent
 				}
 				iPos += iColumnWidth + 1;
 			}
-			//List<string>[] lThreadLines = new List<string>[oConfiguration.MaxThread];
 			List<int> vProcessorOrder = new List<int>();
 
-			/*oConfiguration.OnLog = (eLevel, sMsg) =>
+			oConfiguration.OnLog = (eLevel, sMsg) =>
 			{
 				lock (vProcessorOrder)
 				{
-					//int iProcessor = GetCurrentProcessorNumber();
-					int iProcessor = 0;
+					int iProcessor = GetCurrentProcessorNumber();
 					int iIndex = vProcessorOrder.IndexOf(iProcessor);
 					if (iIndex == -1)
 					{
@@ -89,37 +90,7 @@ namespace Jobinator.Sample.Agent
 							++iCurrentLine;
 						}
 					}
-					//Console.Out.
-
-					//lock (s_oLogLocker)
-					{
-						switch (eLevel)
-						{
-							case Core.ELogLevel.Debug:
-								Console.BackgroundColor = ConsoleColor.Black;
-								Console.ForegroundColor = ConsoleColor.DarkGray;
-								break;
-							case Core.ELogLevel.Normal:
-								Console.BackgroundColor = ConsoleColor.Black;
-								Console.ForegroundColor = ConsoleColor.White;
-								break;
-							case Core.ELogLevel.Warning:
-								Console.BackgroundColor = ConsoleColor.Black;
-								Console.ForegroundColor = ConsoleColor.DarkYellow;
-								break;
-							case Core.ELogLevel.Error:
-								Console.BackgroundColor = ConsoleColor.Red;
-								Console.ForegroundColor = ConsoleColor.Black;
-								break;
-						}
-						//Console.Write("\n{0} {1} : {2}", DateTime.Now.ToString(), eLevel.ToString().PadRight(8), sMsg);
-					}
 				}
-			};*/
-#else
-			oConfiguration.OnLog = (eLevel, sMsg) =>
-			{
-				Console.Write("\n{0} {1} : {2}", DateTime.Now.ToString(), eLevel.ToString().PadRight(8), sMsg);
 			};
 #endif
 			Core.JobManager.Init(oConfiguration);
