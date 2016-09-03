@@ -103,7 +103,7 @@ namespace Jobinator.Core
 				oJob.CallerAssembly = oCallExpression.Method.ReflectedType.Assembly.FullName;
 				oJob.CallerTypeName = oCallExpression.Method.ReflectedType.FullName;
 				oJob.CallerMethod = oCallExpression.Method.Name;
-				oJob.ReturnedTypeName = oCallExpression.Method.ReturnType.Name;
+				oJob.ReturnedTypeName = oCallExpression.Method.ReturnType.FullName;
 				oJob.Args = Reflection.GetArguments(oCallExpression);
 				System.Collections.Generic.HashSet<string> lReferences = new System.Collections.Generic.HashSet<string>();
 				Reflection.GetAssemblyDependencies(lReferences, oCallExpression.Method.ReflectedType.Assembly);
