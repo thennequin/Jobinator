@@ -78,7 +78,7 @@ namespace Jobinator.Core
 							Console.ForegroundColor = ConsoleColor.Black;
 							break;
 					}
-					Console.Write("\n{0} {1} : {2}", DateTime.Now.ToString(), eLevel.ToString().PadRight(8), sMsg);
+					Console.WriteLine("{0} {1} : {2}", DateTime.Now.ToString(), eLevel.ToString().PadRight(8), sMsg);
 				}
 			};
 		}
