@@ -41,28 +41,28 @@ namespace Jobinator.Core
 			if (oExpression.NodeType == System.Linq.Expressions.ExpressionType.Constant)
 			{
 				ConstantExpression oConstantExpression = oExpression as ConstantExpression;
-				if (null != oConstantExpression.Value)
+				if (null == sField)
 				{
-					if (null == sField)
-					{
-						ExpressionArgument oArg = new ExpressionArgument();
-						oArg.sArg = TypeSerializer.SerializeToString(oConstantExpression.Value);
-						oArg.sType = oConstantExpression.Type.FullName;
-						return oArg;
-					}
-					else
+					ExpressionArgument oArg = new ExpressionArgument();
+					oArg.sArg = oConstantExpression.Value != null ? TypeSerializer.SerializeToString(oConstantExpression.Value) : null;
+					oArg.sType = oConstantExpression.Type.FullName;
+					return oArg;
+				}
+				else
+				{
+					ExpressionArgument oArg = new ExpressionArgument();
+					if (null != oConstantExpression.Value)
 					{
 						Type oType = oConstantExpression.Value.GetType();
 						System.Reflection.FieldInfo oFieldInfo = oType.GetField(sField);
 						object oFieldValue = oFieldInfo.GetValue(oConstantExpression.Value);
 						if (null != oFieldValue)
 						{
-							ExpressionArgument oArg = new ExpressionArgument();
 							oArg.sArg = TypeSerializer.SerializeToString(oFieldValue);
 							oArg.sType = null;
-							return oArg;
 						}
 					}
+					return oArg;
 				}
 			}
 			else if (oExpression.NodeType == System.Linq.Expressions.ExpressionType.MemberAccess)
