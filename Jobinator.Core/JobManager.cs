@@ -122,8 +122,21 @@ namespace Jobinator.Core
 			if (oJobManager.IsAgent)
 			{
 				//Scan dependencies folder
-				oJobManager.m_sDependenciesPath = System.IO.Path.GetFullPath("dependencies");
-				if (System.IO.Directory.Exists(oJobManager.m_sDependenciesPath))
+				oJobManager.m_sDependenciesPath = System.IO.Path.GetFullPath(oConfiguration.DependenciesFolder);
+
+				if (!System.IO.Directory.Exists(oJobManager.m_sDependenciesPath))
+				{
+					System.IO.Directory.CreateDirectory(oJobManager.m_sDependenciesPath);
+				}
+				else
+				{
+					if (oConfiguration.CleanDependencies)
+					foreach (string sFile in System.IO.Directory.GetFiles(oJobManager.m_sDependenciesPath))
+					{
+						System.IO.File.Delete(sFile);
+					}
+				}
+				/*else
 				{
 					foreach (string sFile in System.IO.Directory.GetFiles(oJobManager.m_sDependenciesPath))
 					{
@@ -138,12 +151,10 @@ namespace Jobinator.Core
 							oJobManager.Log(ELogLevel.Error, "Dependency loading error: " + System.IO.Path.GetFileName(sFile) + " => " + e.Message);
 						}
 					}
-				}
-				else
-				{
-					System.IO.Directory.CreateDirectory(oJobManager.m_sDependenciesPath);
-				}
-				
+				}*/
+
+				AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(oJobManager.CustomResolveEventHandler);
+
 				oJobManager.m_iMaxThread = oConfiguration.MaxThread;
 				oJobManager.m_vAcceptedQueue = oConfiguration.AcceptedQueue != null ? oConfiguration.AcceptedQueue.Where(q => !string.IsNullOrWhiteSpace(q)).ToArray() : null;
 				oJobManager.m_mCurrentJobs = new Dictionary<Thread, Job>();
@@ -154,6 +165,16 @@ namespace Jobinator.Core
 			}
 
 			Current = oJobManager;
+		}
+
+		private System.Reflection.Assembly CustomResolveEventHandler(object sender, ResolveEventArgs args)
+		{
+			Log(ELogLevel.Debug, "Resolving " + args.Name);
+			string sAssemblyPath = System.IO.Path.Combine(m_sDependenciesPath, new System.Reflection.AssemblyName(args.Name).Name + ".dll");
+			if (!System.IO.File.Exists(sAssemblyPath))
+				return null;
+			System.Reflection.Assembly assembly = System.Reflection.Assembly.LoadFrom(sAssemblyPath);
+			return assembly;
 		}
 
 		public void Stop()
@@ -637,7 +658,9 @@ namespace Jobinator.Core
 						{
 							oStream.Write(oResObj.Content, 0, oResObj.Content.Length);
 						}
-						return System.Reflection.Assembly.LoadFile(sAssemblyPath);
+						System.Reflection.Assembly oAssembly = System.Reflection.Assembly.LoadFrom(sAssemblyPath);
+						Log(ELogLevel.Normal, "Assembly loaded: " + oAssembly.GetName().Name);
+						return oAssembly;
 					}
 					else
 					{

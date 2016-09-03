@@ -32,6 +32,8 @@ namespace Jobinator.Core
 		public string MainServer { get; set; } = "localhost";
 		public int MaxThread { get; set; } = 0;
 		public string[] AcceptedQueue { get; set; }
+		public string DependenciesFolder { get; set; } = "dependencies";
+		public bool CleanDependencies { get; set; } = true;
 
 		//For Server & Agent
 		public ushort MainServerPort { get; set; } = 56246;
