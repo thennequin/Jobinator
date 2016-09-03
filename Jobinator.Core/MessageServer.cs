@@ -71,7 +71,7 @@ namespace Jobinator.Core
 
 		void RunClient(object oClient)
 		{
-			Console.WriteLine("New agent");
+			JobManager.LogStatic(ELogLevel.Debug, "New agent");
 			TcpClient oTcpClient = (TcpClient)oClient;
 			Socket oSocket = oTcpClient.Client;
 			while (!m_bShouldStop)
@@ -92,10 +92,10 @@ namespace Jobinator.Core
 					if (!oTcpClient.Connected)
 						break;
 					else
-						Console.WriteLine("Unhandled exception: " + e.Message);
+						JobManager.LogStatic(ELogLevel.Error, "Unhandled exception: " + e.Message);
 				}
 			}
-			Console.WriteLine("Agent disconnected");
+			JobManager.LogStatic(ELogLevel.Debug, "Agent disconnected");
 			oTcpClient.Close();
 		}
 	}

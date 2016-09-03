@@ -96,7 +96,7 @@ namespace Jobinator.Core
 					}
 					catch
 					{
-						Console.WriteLine("Can't connect to host '{0}' on port {1}, next try in 2 seconds".Fmt(m_sLastHost, m_iLastPort));
+						JobManager.LogStatic(ELogLevel.Warning, "Can't connect to host '{0}' on port {1}, next try in 2 seconds".Fmt(m_sLastHost, m_iLastPort));
 						Thread.Sleep(2000);
 					}
 				}
@@ -122,7 +122,7 @@ namespace Jobinator.Core
 							}
 							catch (Exception e)
 							{
-								Console.WriteLine("Exception: " + e.Message);
+								JobManager.LogStatic(ELogLevel.Error, "Exception: " + e.Message);
 								break;
 							}
 						}
