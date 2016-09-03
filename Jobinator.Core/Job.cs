@@ -64,7 +64,7 @@ namespace Jobinator.Core
 			Type[] vArgsType = new Type[0];
 			if (Args != null)
 			{
-				vArgsType = Args.Select(a => Type.GetType(a.sType)).ToArray();
+				vArgsType = Args.Select(a => a.sType != null ? Type.GetType(a.sType) : null).ToArray();
 			}
 
 			System.Reflection.MethodInfo oMethodInfo = oCallerType.GetMethod(CallerMethod, vArgsType);
