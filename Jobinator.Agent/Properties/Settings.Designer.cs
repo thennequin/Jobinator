@@ -23,51 +23,39 @@ namespace Jobinator.Sample.Agent.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
         public string MainServer {
             get {
                 return ((string)(this["MainServer"]));
             }
-            set {
-                this["MainServer"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("56246")]
         public ushort MainServerPort {
             get {
                 return ((ushort)(this["MainServerPort"]));
             }
-            set {
-                this["MainServerPort"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Queues {
             get {
                 return ((string)(this["Queues"]));
             }
-            set {
-                this["Queues"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int MaxThread {
             get {
                 return ((int)(this["MaxThread"]));
-            }
-            set {
-                this["MaxThread"] = value;
             }
         }
     }

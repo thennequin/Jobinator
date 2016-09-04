@@ -2,16 +2,16 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Jobinator.Sample.Agent.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="MainServer" Type="System.String" Scope="User">
+    <Setting Name="MainServer" Type="System.String" Scope="Application">
       <Value Profile="(Default)">localhost</Value>
     </Setting>
-    <Setting Name="MainServerPort" Type="System.UInt16" Scope="User">
+    <Setting Name="MainServerPort" Type="System.UInt16" Scope="Application">
       <Value Profile="(Default)">56246</Value>
     </Setting>
-    <Setting Name="Queues" Type="System.String" Scope="User">
+    <Setting Name="Queues" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="MaxThread" Type="System.Int32" Scope="User">
+    <Setting Name="MaxThread" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">4</Value>
     </Setting>
   </Settings>
